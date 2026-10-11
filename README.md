@@ -1,37 +1,40 @@
-# TODO: project title
+# Thermal Early Warning for Drought Stress and Hidden Heat Sources
 
-Sustainable Computing (SUSCOMP) 2026, UL FRI. Project topic P9.
+Semester project for the Sustainable Computing course (SUSCOMP), University of Ljubljana, Faculty of Computer and Information Science, 2026/27.
+
+**Topic:** P9, Eco-Drone for Monitoring Forest Health and Fires (Environmental Monitoring and Biological Aspects, SDG 15)
 
 ## Team
 
-- TODO: name, GitHub username
-- TODO: name, GitHub username
+| Name | GitHub |
+|---|---|
+| Raghav Verma | [@Raghavv404](https://github.com/Raghavv404) |
+| Doohyun Kim | [@hyun7586](https://github.com/hyun7586) |
 
-## About
+## About the project
 
-TODO: two or three sentences on what the project measures and why.
+TODO: 3–5 sentences in your own words. What problem, what you measure, what you expect to find.
 
-## Folders
+## Repository structure
 
 | Folder | Contents |
 |---|---|
 | `proposal/` | Project proposal |
-| `updates/` | Slides for updates 1, 2 and 3 |
-| `report/` | Final report |
-| `slides/` | Final presentation |
-| `data/raw/` | Photos as captured, one folder per day |
-| `data/processed/` | Cleaned data produced by the scripts |
-| `data/labels.csv` | One row per plant: group and wilt date |
+| `updates/` | Slides for the three progress updates |
+| `data/` | Raw and processed measurements |
 | `src/` | Scripts |
 | `notebooks/` | Analysis notebooks |
-| `results/` | Energy, footprint and rubric results |
-| `docs/protocol.md` | How photos are captured |
-| `docs/log.md` | Dated log of who did what |
+| `results/` | Tables and figures |
+| `report/` | Final report |
+| `slides/` | Final presentation |
+| `docs/` | Capture protocol and work log |
 
-## How to run
+TODO: remove folders you don't use, and add them as you create them.
 
-TODO: setup steps and the commands that regenerate the figures.
+## Status
 
-## AI use
+TODO: one line, updated at each milestone. Example: "Week of 12 Oct: topic registered, proposal in progress."
 
-TODO: state which AI tools were used and for what.
+## Use of AI tools
+
+TODO: state how AI tools were used. The course limits AI to grammar and style and evaluates its use, so keep this accurate and up to date.
