@@ -34,7 +34,3 @@ TODO: remove folders you don't use, and add them as you create them.
 ## Status
 
 TODO: one line, updated at each milestone. Example: "Week of 12 Oct: topic registered, proposal in progress."
-
-## Use of AI tools
-
-TODO: state how AI tools were used. The course limits AI to grammar and style and evaluates its use, so keep this accurate and up to date.
