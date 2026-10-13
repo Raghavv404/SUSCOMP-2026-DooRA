@@ -25,7 +25,7 @@ We test whether a thermal camera can give early warning of two things: drought s
 | Early Dec | Footprint: embodied emissions, solar and battery budget |
 | Mid Dec – Jan | Report, slides, final presentation |
 
-The full week-by-week plan is in [PLAN.md](PLAN.md).
+The full week-by-week plan is in [PLAN.md](PLAN.md), along with five optional extensions: a user conversation, young trees, a satellite comparison, an open dataset and a field unit.
 
 ## Repository structure
 
