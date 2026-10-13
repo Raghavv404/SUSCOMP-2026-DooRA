@@ -19,12 +19,11 @@ Last year's template dates shifted to this year's calendar:
 | A | Drought experiment: 6–10 potted plants, half unwatered, daily thermal and normal photos for 3 weeks | Core |
 | B | Hidden heat test indoors with safe warm objects, several distances | Core |
 | C | Simple temperature rule vs small ML model; energy per image with the week 5 profiler | Core |
-| D | Footprint: embodied emissions of camera, drone and compute; solar and battery budget; SDID rubric | Core (desk work) |
-| E | Drone flight: thermal hotspot search outdoors over a cold field | Optional, if the gate below passes |
+| D | Footprint: embodied emissions of camera and compute; drone energy per hectare from public specs; solar and battery budget; SDID rubric | Core (desk work) |
 
-A drone is not necessary for this project, but we can use one. **Gate for Part E (decide by 30 Oct):** the drone carries a thermal camera or the lent camera can be mounted; a qualified person (faculty staff or a certified student) flies it; the faculty confirms where flying is allowed. EU drone rules require registration and a pilot certificate for most drones, so ask the professor who handles that. If any item fails, the flight stays simulated (camera on a pole) and energy per hectare is calculated from the drone's specs.
+No drone is flown: EU rules require registration and a pilot licence, and a drone does not fit the budget. Part D only estimates the energy a drone would use per hectare, from public specs.
 
-Winter note: outdoor plants are dormant, so drought stress stays indoors. Cold ground makes warm objects easy to see, so the outdoor hotspot flight suits November and December.
+Winter note: outdoor plants are dormant, so drought stress stays indoors.
 
 ## Extensions (outside the core scope)
 
@@ -42,15 +41,15 @@ Ranked by value for effort. None of them may delay Parts A–D.
 
 | Week of | Work | Course tie-in | Output in repo |
 |---|---|---|---|
-| 14-15 Oct | Register P9. Get camera model and loan terms. Buy plants (and 4 spruce saplings if a nursery has them) and set up the photo spot. Write and submit the proposal. Ask about the drone and who may fly it. | Proposal template | `proposal/proposal.pdf`, `docs/log.md` started |
-| 19 Oct | Test shots: fix distance, angle, time of day, reference card. Write the capture protocol. Let plants settle with normal watering. Email the Slovenia Forest Service or a local fire brigade (Extension 1). | Embodied emissions lab: start a table for camera, drone, laptop | `docs/protocol.md`, first photos in `data/raw/` |
-| 26 Oct | **Start Part A**: stop watering the dry group, daily photos. Script to read temperatures from the images. Decide the Part E gate by 30 Oct. | — | `src/extract.py`, `data/raw/dayNN/` |
+| 14-15 Oct | Register P9. Get camera model and loan terms. Buy plants (and 4 spruce saplings if a nursery has them) and set up the photo spot. Write and submit the proposal. | Proposal template | `proposal/proposal.pdf`, `docs/log.md` started |
+| 19 Oct | Test shots: fix distance, angle, time of day, reference card. Write the capture protocol. Let plants settle with normal watering. Email the Slovenia Forest Service or a local fire brigade (Extension 1). | Embodied emissions lab: start a table for camera, laptop | `docs/protocol.md`, first photos in `data/raw/` |
+| 26 Oct | **Start Part A**: stop watering the dry group, daily photos. Script to read temperatures from the images. | — | `src/extract.py`, `data/raw/dayNN/` |
 | 2 Nov | Part A day 7–13. First plot of dry vs watered temperature. **Update 1.** | Update 1 slides: Overview & Early Activities; Progress & Next Steps | `updates/update1.pdf` |
 | 9 Nov | Part A day 14–20. Record the day each dry plant visibly wilts. Run Part B (hidden heat, 3 distances, 5 trials each). | Measuring software lab: try `profiler.py` on the extract script | `data/raw/heat/`, wilt dates in `data/labels.csv` |
 | 16 Nov | End Part A. Clean dataset. Build the simple rule and compute days of early warning. | — | `data/processed/`, `notebooks/01_rule.ipynb` |
 | 23 Nov | Train the small ML model on own photos; compare with the rule. **Update 2.** | Update 2 slides: Progress Summary; Adjustments & Next Steps | `notebooks/02_model.ipynb`, `updates/update2.pdf` |
-| 30 Nov | Energy per image for rule and model: 5 runs plus warm-up, mean and standard deviation. Repeat on a Raspberry Pi or old phone if available. Part E flight if the gate passed. | Week 5 method; cloud emissions lab if training ran on Colab | `results/energy.md`, flight data in `data/raw/flight/` |
-| 7 Dec | Part D: embodied emissions, solar and battery budget, drone energy per hectare. Apply the SDID rubric to the project. Satellite comparison table (Extension 3). Buffer for a missed flight day. | Week 3 and week 10 labs | `results/footprint.md`, `results/sdid.md`, `results/satellite.md` |
+| 30 Nov | Energy per image for rule and model: 5 runs plus warm-up, mean and standard deviation. Repeat on a Raspberry Pi or old phone if available. | Week 5 method; cloud emissions lab if training ran on Colab | `results/energy.md` |
+| 7 Dec | Part D: embodied emissions, solar and battery budget, drone energy per hectare from public specs. Apply the SDID rubric to the project. Satellite comparison table (Extension 3). | Week 3 and week 10 labs | `results/footprint.md`, `results/sdid.md`, `results/satellite.md` |
 | 14 Dec | Final figures. Report sections Methodology and Results drafted. **Update 3.** | Update 3 slides: Outcomes; Summary & Final Work | `updates/update3.pdf`, `report/` draft |
 | 21 Dec | Finish the full report draft. Review it as the professor would. | Report template | `report/report.pdf` draft |
 | 28 Dec | Holiday buffer. Fix review comments only. | — | — |
@@ -74,7 +73,7 @@ docs/protocol.md   docs/log.md   README.md
 
 - **Raghav:** plant care and daily capture, hidden heat test, presentations.
 - **Teammate:** extraction script, analysis notebooks, energy measurements.
-- **Both:** proposal, footprint section, report writing, the drone day.
+- **Both:** proposal, footprint section, report writing.
 
 ## Risks and fallbacks
 
@@ -83,7 +82,6 @@ docs/protocol.md   docs/log.md   README.md
 | Camera not available every day | Photograph every second day; extend Part A by a week |
 | Camera gives only a coloured picture, no temperatures | Use the reference card and compare relative brightness; state the limit |
 | Plants show no clear difference | Report it as a negative result with the measurements; Parts B–D still stand |
-| No drone or pilot available, or weather blocks the flight | Pole-mounted simulated flight plus calculation |
 | Behind schedule at Update 2 | Drop the ML model; keep the rule and the energy measurement |
 | Extensions fall behind | Drop them in reverse order, 5 first |
 
