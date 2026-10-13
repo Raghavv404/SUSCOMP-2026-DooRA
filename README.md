@@ -49,5 +49,5 @@ This plan is a first version and not final. Still open:
 
 - The deliverable dates are placeholders until we confirm them on Učilnica.
 - We do not yet know the camera model or the loan terms.
-- A real drone flight is a stretch goal. We decide by 30 Oct, depending on whether the drone can carry the camera, who is allowed to fly it, and where flying is permitted. Otherwise the flight is simulated with the camera on a pole.
+- A drone is not necessary for the project, but we can use one. We decide by 30 Oct, depending on whether the drone can carry the camera, who is allowed to fly it, and where flying is permitted. Otherwise the flight is simulated with the camera on a pole.
 - The split of work between us is a suggestion and may change.

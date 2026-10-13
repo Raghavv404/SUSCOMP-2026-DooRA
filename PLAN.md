@@ -20,9 +20,9 @@ Last year's template dates shifted to this year's calendar:
 | B | Hidden heat test indoors with safe warm objects, several distances | Core |
 | C | Simple temperature rule vs small ML model; energy per image with the week 5 profiler | Core |
 | D | Footprint: embodied emissions of camera, drone and compute; solar and battery budget; SDID rubric | Core (desk work) |
-| E | Real drone flight: thermal hotspot search outdoors over a cold field | Stretch, only if the gate below passes |
+| E | Drone flight: thermal hotspot search outdoors over a cold field | Optional, if the gate below passes |
 
-**Gate for Part E (decide by 30 Oct):** the drone carries a thermal camera or the lent camera can be mounted; a qualified person (faculty staff or a certified student) flies it; the faculty confirms where flying is allowed. EU drone rules require registration and a pilot certificate for most drones, so ask the professor who handles that. If any item fails, the flight stays simulated (camera on a pole) and energy per hectare is calculated from the drone's specs.
+A drone is not necessary for this project, but we can use one. **Gate for Part E (decide by 30 Oct):** the drone carries a thermal camera or the lent camera can be mounted; a qualified person (faculty staff or a certified student) flies it; the faculty confirms where flying is allowed. EU drone rules require registration and a pilot certificate for most drones, so ask the professor who handles that. If any item fails, the flight stays simulated (camera on a pole) and energy per hectare is calculated from the drone's specs.
 
 Winter note: outdoor plants are dormant, so drought stress stays indoors. Cold ground makes warm objects easy to see, so the outdoor hotspot flight suits November and December.
 
@@ -71,7 +71,7 @@ docs/protocol.md   docs/log.md   README.md
 | Camera not available every day | Photograph every second day; extend Part A by a week |
 | Camera gives only a coloured picture, no temperatures | Use the reference card and compare relative brightness; state the limit |
 | Plants show no clear difference | Report it as a negative result with the measurements; Parts B–D still stand |
-| Drone gate fails or weather blocks the flight | Pole-mounted simulated flight plus calculation |
+| No drone or pilot available, or weather blocks the flight | Pole-mounted simulated flight plus calculation |
 | Behind schedule at Update 2 | Drop the ML model; keep the rule and the energy measurement |
 
 ## Checkpoints
