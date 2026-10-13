@@ -13,7 +13,7 @@ Semester project for the Sustainable Computing course (SUSCOMP), University of L
 
 ## About the project
 
-We test whether a thermal camera can give early warning of two things: drought stress in plants, and hidden heat sources that could start a fire. For the first, we keep 6–10 potted plants indoors, stop watering half of them, and photograph all of them daily with a thermal and a normal camera for three weeks. For the second, we place safe warm objects out of sight and check from several distances whether the camera finds them. We then compare a simple temperature rule with a small ML model and measure the energy each one uses per image. Finally, we estimate the footprint of the whole system: the embodied emissions of the camera, drone and compute, and the solar and battery budget needed to run it.
+We test whether a thermal camera can give early warning of two things: drought stress in plants, and hidden heat sources that could start a fire. For the first, we keep 6–10 potted plants indoors, stop watering half of them, and photograph all of them daily with a thermal and a normal camera for three weeks. For the second, we place safe warm objects out of sight and check from several distances whether the camera finds them. We then compare a simple temperature rule with a small ML model and measure the energy each one uses per image. Finally, we estimate the footprint of the whole system: the embodied emissions of the camera and compute, the energy a drone would use per hectare (from public specs), and the solar and battery budget needed to run it.
 
 ## Plan in short
 
@@ -49,5 +49,4 @@ This plan is a first version and not final. Still open:
 
 - The deliverable dates are placeholders until we confirm them on Učilnica.
 - We do not yet know the camera model or the loan terms.
-- A drone is not necessary for the project, but we can use one. We decide by 30 Oct, depending on whether the drone can carry the camera, who is allowed to fly it, and where flying is permitted. Otherwise the flight is simulated with the camera on a pole.
 - The split of work between us is a suggestion and may change.
