@@ -15,9 +15,11 @@ The CO2 cost of 1 kWh from the Slovenian grid changes hour by hour, because the 
 
 ## 1 Related Work
 
-Google's carbon-intelligent computing platform compares a day-ahead forecast of grid carbon intensity with a forecast of its own power demand, and moves non-urgent jobs, such as video processing, to lower-carbon hours [1]. Google reported that this works but did not publish a percentage saving. In the Green Software Foundation's Carbon Hack 2022, the winning tool Lowcarb scheduled federated-learning jobs by carbon intensity and reported 13% lower emissions (organiser-reported) [2]. Zeus, a University of Michigan framework, tunes the GPU power limit and batch size during model training and reports 15.3–75.8% better energy efficiency [3].
+Google's carbon-intelligent computing platform compares a day-ahead forecast of grid carbon intensity with a forecast of its own power demand, and moves non-urgent jobs, such as video processing, to lower-carbon hours [1]. Its blog post says early results show that the shifting works, but it gives no percentage saving [1]. The system is described in a technical paper: it creates day-ahead "virtual capacity curves" that act as hourly resource limits for flexible workloads in Google's data centres [2].
 
-**Gap:** these systems run in data centres or GPU clusters. We could not find a measured test of carbon-aware scheduling on one laptop, with a cheap forecast and a real power meter (to be confirmed in our literature review). We also do not know how much it helps in a grid with a large share of nuclear and hydro power, like Slovenia's.
+Outside Google, Wiesner et al. simulated shifting of delay-tolerant jobs with 2020 carbon-intensity data from Germany, California, Great Britain and France. They report savings of more than 20% in most regions when jobs can wait until the weekend, and more than 5% in all regions when results are only needed the next working day. The savings grow as the deadline gets looser [3]. In the Green Software Foundation's Carbon Hack 2022, the winning tool Lowcarb, a plugin for the Flower federated-learning framework, reported 13% lower emissions without loss of accuracy (organiser-reported) [4]. Zeus, a University of Michigan framework, tunes the GPU power limit and batch size during model training and reports 15.3–75.8% better energy efficiency [5].
+
+**Gap:** these results come from data-centre or GPU-cluster workloads, or from simulations. We could not find a measured test of carbon-aware scheduling on one laptop, with a cheap forecast and a real power meter (to be confirmed in our literature review). The simulations also do not cover Slovenia, whose grid has a large share of nuclear and hydro power and may vary less over the day. Because savings depend on how long a job may wait [3], we will test several deadlines.
 
 ## 2 Methodology
 
@@ -25,7 +27,7 @@ All measurements run on one Mac (Apple Silicon). pyRAPL does not run on it, so w
 
 | Part | What we do |
 |---|---|
-| A. Carbon data | Hourly generation mix for Slovenia from the ENTSO-E Transparency Platform [4], turned into hourly carbon intensity with published lifecycle emission factors (IPCC; verify). We also download ENTSO-E day-ahead wind, solar and load forecasts. |
+| A. Carbon data | Hourly generation mix for Slovenia from the ENTSO-E Transparency Platform [6], turned into hourly carbon intensity with published lifecycle emission factors from the IPCC [7]. We also download ENTSO-E day-ahead wind and solar forecasts and, if available, load forecasts. |
 | B. Forecaster | Predict tomorrow's 24 hourly carbon values. Compare a naive baseline ("same as yesterday") with a simple regression on the ENTSO-E forecasts. |
 | C. Workloads | Two deferrable jobs, both scripted and repeatable: (1) batch LLM inference — a fixed set of about 50–100 prompts through a local model (Ollama or MLX); (2) a clean build of a large open-source project, same commit every run. |
 | D. Scheduler | Given a job and a deadline (e.g. "done by 9:00"), pick the lowest-carbon start time from the forecast and launch the job then. |
@@ -74,8 +76,14 @@ Success means a measured answer, even if the answer is "it saves almost nothing 
 
 [1] Google (2020). *Our data centers now work harder when the sun shines and wind blows.* https://blog.google/inside-google/infrastructure/data-centers-work-harder-sun-shines-wind-blows/
 
-[2] Green Software Foundation (2022). *That's a wrap — CarbonHack22, a big leap in carbon aware computing.* https://greensoftware.foundation/articles/carbonhack22-a-big-leap-in-carbon-aware-computing/
+[2] A. Radovanović et al. (2021). *Carbon-Aware Computing for Datacenters.* arXiv:2106.11750. https://arxiv.org/abs/2106.11750 (preprint; check the final published version)
 
-[3] J. You, J.-W. Chung, M. Chowdhury (2023). Zeus: Understanding and Optimizing GPU Energy Consumption of DNN Training. *USENIX NSDI 2023*. https://www.usenix.org/conference/nsdi23/presentation/you
+[3] P. Wiesner, I. Behnke, D. Scheinert, K. Gontarska, L. Thamsen (2021). Let's Wait Awhile: How Temporal Workload Shifting Can Reduce Carbon Emissions in the Cloud. *Proceedings of the 22nd International Middleware Conference*, pp. 260–272. https://doi.org/10.1145/3464298.3493399
 
-[4] ENTSO-E. *Transparency Platform.* https://transparency.entsoe.eu/ (verify API access steps)
+[4] Green Software Foundation (2022). *That's a wrap — CarbonHack22, a big leap in carbon aware computing.* https://greensoftware.foundation/articles/carbonhack22-a-big-leap-in-carbon-aware-computing/
+
+[5] J. You, J.-W. Chung, M. Chowdhury (2023). Zeus: Understanding and Optimizing GPU Energy Consumption of DNN Training. *USENIX NSDI 2023*, pp. 119–139. https://www.usenix.org/conference/nsdi23/presentation/you
+
+[6] ENTSO-E. *Transparency Platform.* https://transparency.entsoe.eu/ (a security token is needed for API access; check the steps)
+
+[7] IPCC (2014). Annex III: Technology-specific cost and performance parameters. In: *Climate Change 2014: Mitigation of Climate Change (Working Group III, AR5)*, Cambridge University Press, pp. 1329–1356. https://doi.org/10.1017/CBO9781107415416.025 (check the exact table values before use)

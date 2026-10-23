@@ -15,9 +15,11 @@ Developers and students often compare algorithms by their energy use and recomme
 
 ## 1 Related Work
 
-Software energy estimators are now widely used. CodeCarbon, released by Mila, BCG GAMMA and partners in 2020, estimates the CO2 of running code from energy use and the carbon intensity of the local grid [1]. Online calculators such as Green Algorithms estimate footprints from run time and hardware power values [2]. The course's own measuring-software lab uses a profiler based on Intel RAPL on Linux and `powermetrics` on macOS [3].
+Software energy estimators are now widely used. CodeCarbon, released by Mila, BCG GAMMA and partners in 2020, estimates the CO2 of running code from energy use and the carbon intensity of the local grid [1]. Green Algorithms is an online calculator that estimates the footprint of a computation from its run time, hardware and location [2]. The course's own measuring-software lab uses a profiler based on Intel RAPL on Linux and `powermetrics` on macOS [3].
 
-These tools are not always right. An independent study of Kepler, a popular energy tool for Kubernetes, found an error (RMSE) of 11.9 W against RAPL, about a 15× overestimate at container level [4]. **Gap:** most checks compare one estimator with another, not with a wall meter, and they rarely ask the practical question: *does the tool still pick the right "greenest" algorithm?* We could not find such a check on Apple Silicon laptops (to be confirmed in our literature review).
+These tools are not always right. A 2026 study of Kepler, a CNCF energy tool for Kubernetes, reports that its container-level power estimates have an error (RMSE) of 11.9 W against RAPL, about a 15× overestimate [4]. An earlier study, accepted at ICT4S 2025, also concludes that Kepler's energy metrics are "not at a satisfactory level" and proposes an alternative tool [5]. Jay et al. compared software-based power meters for CPU and GPU [6].
+
+**Gap:** we have found no study that checks these tools against a wall meter on an Apple Silicon laptop and asks the practical question: *does the tool still pick the right "greenest" algorithm?* (to be confirmed in our literature review; [6] must be read in full to see how close it comes).
 
 ## 2 Methodology
 
@@ -27,7 +29,7 @@ All work runs on one Mac (Apple Silicon). pyRAPL and Intel Power Gadget do not r
 |---|---|
 | A. Workload suite | The problems from S1: sorting, image processing, shortest path. 2–3 algorithm variants each (e.g. insertion sort vs quicksort vs built-in sort; naive Python blur vs NumPy; Dijkstra with and without a heap). |
 | B. Ground truth | A wall power meter, minus the measured idle power. Fixed protocol: battery full, same screen brightness and Wi-Fi state, runs long enough for the meter, 5 runs plus a warm-up. |
-| C. Estimators under test | (1) macOS `powermetrics` (on-chip sensors), (2) CodeCarbon, (3) a CPU-time × power-value model, as used by many online calculators. Metrics: error in %, and ranking agreement with the meter (Kendall's tau). |
+| C. Estimators under test | (1) macOS `powermetrics` (on-chip sensors), (2) CodeCarbon, (3) a CPU-time × power-value model, similar in principle to calculators such as [2]. Metrics: error in %, and ranking agreement with the meter (Kendall's tau). |
 | D. Calibration tool | `calibrate.py`: one calibration run against the wall meter fits an idle offset and a scale for each estimator. We test it on workloads not used for calibration: error and ranking before vs after. |
 | E. Footprint (desk work) | Energy of the whole experiment vs the laptop's embodied carbon per hour of use (manufacturer environmental report). A measurement checklist for S1-type projects. |
 
@@ -70,8 +72,12 @@ Success means a measured answer for each tool, even if the answer is "this tool 
 
 [1] Mila (2020). *Top AI Experts Create CodeCarbon, a Tool to Track and Reduce Computing's CO2 Emissions.* https://mila.quebec/en/news/top-ai-experts-create-codecarbon-a-tool-to-track-and-reduce-computings-co2-emissions
 
-[2] L. Lannelongue, J. Grealey, M. Inouye (2021). Green Algorithms: Quantifying the Carbon Footprint of Computation. *Advanced Science*. (verify)
+[2] L. Lannelongue, J. Grealey, M. Inouye (2021). Green Algorithms: Quantifying the Carbon Footprint of Computation. *Advanced Science*, 8(12), 2100707. https://doi.org/10.1002/advs.202100707
 
 [3] SUSCOMP 2026 Labs, *Measuring Software Energy Consumption* (week 5). https://github.com/is-professor/SUSCOMP-2026-LABS/tree/main/week5-measuring-software
 
-[4] *Container-level Energy Observability in Kubernetes Clusters.* arXiv:2504.10702. https://arxiv.org/pdf/2504.10702 (check final authors and venue)
+[4] Z. Bellal, L. Lahlou, N. Kara, T. Murphy, T. P. Nguyen, A. Ahmed, M. Perez-Jimenez (2026). Investigating the Potential of Kepler Toward Power Observability for Sustainable Cloud Computing. *IEEE Transactions on Green Communications and Networking*, 10, 2118–2135. https://doi.org/10.1109/TGCN.2026.3660816
+
+[5] B. Pijnacker, B. Setz, V. Andrikopoulos (2025). *Container-level Energy Observability in Kubernetes Clusters.* arXiv:2504.10702 (accepted at ICT4S 2025). https://arxiv.org/abs/2504.10702
+
+[6] A.-L. Jay, V. Ostapenco, L. Lefèvre, D. Trystram, A.-C. Orgerie (2023). An experimental comparison of software-based power meters: focus on CPU and GPU. *2023 IEEE/ACM 23rd International Symposium on Cluster, Cloud and Internet Computing (CCGrid)*, pp. 106–118. https://doi.org/10.1109/CCGrid57682.2023.00020
