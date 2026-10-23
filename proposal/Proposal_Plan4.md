@@ -1,72 +1,76 @@
-claud# CarbonSched: A Forecast-Driven Carbon-Aware Task Scheduler
+# Find It, Fix It, Measure It: A Thermal-Camera Heat-Loss Audit with a Real Before/After Test
 
-## 1. Introduction
+Doohyun Kim, Raghav Verma — University of Ljubljana, Faculty of Computer and Information Science
 
-**Electricity is not always "clean." Its carbon cost changes hour by hour, but software never checks this before running a task.**
+October 2026
 
-- Power grids mix clean energy (solar, wind) and dirty energy (coal, gas). The CO2 cost of using 1 kWh changes during the day.
-- Right now, software always runs tasks the moment you click "start." It never asks: "Is this a good time, carbon-wise?"
-- We will build CarbonSched, a tool that delays non-urgent tasks (video export, backups, model training) to hours when the power grid is cleanest.
-- This project supports **SDG 7** (clean energy — better use of energy we already produce) and **SDG 13** (climate action — direct emission cuts).
-- No new hardware is needed. Any developer can install this tool today.
+Buildings are one of the largest energy users in Europe (about 40% of total energy consumption in the EU, according to the recitals of the EU Energy Performance of Buildings Directive [1]). A lot of this energy leaves through windows, frames and walls. Thermal cameras make these leaks visible, and some companies now map heat loss for whole cities. But a heat-loss map only helps if fixing the leaks really saves energy, and this step is rarely measured. This project asks: **can a low-cost thermal-camera pipeline find which building elements leak the most heat, and do cheap fixes on those elements cause a measurable drop in heat loss?** We will build software that turns thermal images of rooms into a ranked list of leaks, apply cheap removable fixes to half of the top elements, and measure the change against untreated elements. The topic is based on #2 (Drone-Based Thermal Energy Auditor). It supports SDG 7 (Affordable and Clean Energy), SDG 11 (Sustainable Cities and Communities) and SDG 13 (Climate Action).
 
-## 2. Related Work
+## 1 Related Work
 
-**Big tech companies already proved this idea works — we bring it down to a size one student team can build and test.**
+MyHEAT is a company built on research from the University of Calgary. It collects aerial thermal images, and by the end of 2019 it had processed images for 47+ cities in two countries [2]. In Saint John, New Brunswick, the utility Saint John Energy uses MyHEAT maps in its Home Heat Saver programme: each home gets a heat-loss score from 1 to 10, and homeowners with high scores are encouraged to upgrade and are connected with rebate programmes [3].
 
-- Google shifts data center workloads to low-carbon hours. Result: 25% less CO2.
-- The Green Software Foundation ran a hackathon (CarbonHack22). Winning tools **Lowcarb** (-13% CO2) and **Zeus** (-24% CO2) proved carbon-aware scheduling works for AI training.
-- ING built a scheduler called SCALE for their own data centers. Result: 20% less CO2.
-- **Gap we fill**: all these tools are built for big companies with big data centers. There is no simple, open tool that one developer can run locally, test with real tasks, and measure with their own hardware. We build that.
+On the measurement side, infrared thermography can estimate the U-value (heat transfer coefficient) of a building wall or window on site, from surface, indoor and outdoor temperatures [4], and a review covers how thermography is used for building diagnostics [5]. The standard method for qualitative thermography of building envelopes, EN 13187, was replaced in 2023 by EN ISO 6781-1 [6]; we will check it for the conditions we must meet (for example the indoor–outdoor temperature difference).
 
-## 3. Proposed Approach / Methodology
+**Gap:** the outcome figure we found for such programmes, that homeowners are "5x more likely to make improved changes", is quoted by the utility from "similar projects" and is not a result of this programme [3]. We found no independent evaluation. We also could not find a small, controlled study that closes the loop: diagnose with a camera, apply a fix, and measure the real change against an untreated control (to be confirmed in our literature review).
 
-**We build, test, and measure a working scheduler — not just a design on paper.**
+## 2 Methodology
 
-1. Pick 3–5 everyday compute tasks (e.g., video export, file compression, a small ML training run).
-2. Connect to a free carbon-intensity API (electricityMaps or WattTime) to get real-time and forecast CO2-per-kWh data for Slovenia.
-3. Build the scheduler: user marks a task "not urgent," sets a deadline, and the tool picks the lowest-carbon time slot before that deadline.
-4. Add a small forecasting model (e.g., Prophet or simple moving average) to predict carbon intensity a few hours ahead — this lets the scheduler plan instead of just reacting.
-5. Measure real energy use of each task with pyRAPL (or Intel Power Gadget).
-6. Compare: same task run immediately vs. run through CarbonSched. Calculate CO2 saved.
-7. Also measure the forecasting model's own energy cost, to check if the "smart" part is actually worth it.
+We do not use a drone: EU rules require registration and a pilot licence for most drones (verify). We scan rooms from the inside, at ground level, with a borrowed thermal camera.
 
-## 4. Milestones
-
-| Date | Deliverable |
+| Part | What we do |
 |---|---|
-| 20.10.2026 | Proposal submitted |
-| 03.11.2026 | API connected, pyRAPL measurement working on 1 task |
-| 24.11.2026 | Core scheduler working on 3 tasks, first before/after numbers |
-| 05.01.2027 | Forecasting model added, full test on 5 tasks, report draft |
-| 08.01.2027 | Final report, code, and poster submitted |
-| 11.01.2027 | Presentation |
+| A. Protocol and baseline | About 10 elements (windows, frames, door gaps, outer walls) in our own rooms and, with permission, at FRI. Fixed conditions: indoor–outdoor difference of about 10 °C or more (a working assumption, to be checked against EN ISO 6781-1 [6]), before sunrise, heating steady, same distance and angle. 3 baseline sessions. |
+| B. Pipeline | Read per-pixel temperatures, mark each element, estimate its U-value and heat loss in watts with the infrared-thermography method [4], and output a ranked list of leaks. Check camera temperatures against a contact thermometer. |
+| C. Intervention | Pair similar elements. One of each pair gets a cheap removable fix (draught strip, window insulation film, radiator reflector foil); the other is the control. |
+| D. Measurement | 3 sessions after the fixes, same protocol. We compare the change in fixed elements with the change in controls (difference-in-differences), with heat loss divided by the indoor–outdoor temperature difference. |
+| E. Footprint (desk work) | Scale the saving to a heating season with ARSO climate data; convert to CO2 with the emission factor of the room's heating; compare with the embodied carbon of the camera, materials and compute (payback time). Energy per image of the pipeline with `powermetrics`. A desk estimate of drone energy per building. |
 
-## 5. Evaluation Plan
+## 3 Milestones
 
-**Success means a real, measured drop in CO2 — not just a working demo.**
+Dates are placeholders until we confirm them on Učilnica.
 
-- Main metric: % CO2 reduction when using CarbonSched vs. running tasks immediately, across all test tasks.
-- Target: match or beat published results (10–25% reduction).
-- Check the forecasting model's own energy cost against the CO2 it helps save — if the model costs more than it saves, we report that honestly.
-- **Rebound effect discussion**: if people feel their tasks are "green now," they might run more non-urgent tasks than before. We will discuss this risk and whether it could cancel out the savings.
+- **TBD** — Submission of project proposal
+- **26.10.2026** — Capture protocol written; script reads per-pixel temperatures
+- **04.11.2026** — Update 1 (heat-loss estimation working; camera checked against the contact thermometer)
+- **16.11.2026** — 3 baseline sessions done; ranked leak list; fixes applied
+- **25.11.2026** — Update 2 (first session after the fixes)
+- **30.11.2026** — 3 sessions after the fixes done; pipeline energy measured
+- **07.12.2026** — Difference-in-differences, heating-season saving, CO2 and payback analysis finished
+- **18.12.2026** — Update 3 (final figures, Methodology and Results drafted)
+- **04.01.2027** — Final report, slides and poster ready
+- **11.01.2027** — Final submission and presentation
 
-## 6. Resources
+## 4 Evaluation Plan
 
-**Everything needed is free or already available — no purchase required.**
+Success means a measured answer, even if the fixes turn out to make no clear difference.
 
-- Software: Python, pyRAPL / Intel Power Gadget, electricityMaps or WattTime API (free academic tier), Prophet or statsmodels for forecasting.
-- Hardware: our own laptops/desktops. No special equipment needed.
-- Team roles (to confirm with teammate):
-  - Person A: API integration, pyRAPL measurement, data analysis
-  - Person B: scheduler logic, forecasting model, evaluation automation
+- **Diagnosis quality:** camera temperatures against the contact thermometer (mean error); does the ranked list put the worst elements first?
+- **Fix effect:** the difference-in-differences of normalized heat loss between fixed elements and controls, with its uncertainty.
+- **Energy and CO2:** the measured saving scaled to one heating season, in kWh and kg CO2, and the payback time against the embodied carbon of the camera, materials and compute.
+- **Negative results:** if the fixes show no measurable change, we report this with the measurement uncertainty. The pipeline and footprint parts still stand.
+- **SDGs:** lower heating demand supports SDG 7 and SDG 13; cheap, repeatable audits for student housing support SDG 11.
+- **Rebound effect:** a warmer room may lead people to raise the thermostat or heat more rooms ("comfort taking"), so the saving shrinks. Cheap audits may also mean more cameras bought and later thrown away. We discuss both.
 
-## 7. References
+## 5 Resources
 
-- Green Software Foundation, *CarbonHack22 Results* — https://greensoftware.foundation/articles/carbonhack22-a-big-leap-in-carbon-aware-computing/
-- Green Software Foundation, *Carbon Aware SDK* — https://greensoftware.foundation/stories/carbon-aware-sdk/
-- Google, *Carbon-Intelligent Computing* (data center load shifting)
-- ING, *S.C.A.L.E.: Scheduler for Carbon-Aware Load Execution*
-- Survey: *A Survey on Task Scheduling in Carbon-Aware Container Orchestration* — https://arxiv.org/pdf/2508.05949
-- electricityMaps API docs — https://www.electricitymaps.com/
-- WattTime API docs — https://www.watttime.org/
+- **Equipment:** a borrowed thermal camera that exports per-pixel temperatures (model and loan terms TBD; can be shared with the team's other thermal work), a contact thermometer, two temperature loggers, removable fix materials (low cost), a Mac laptop.
+- **Software:** Python, Jupyter notebooks, macOS `powermetrics`, the course profiler (week 5).
+- **Data:** our own thermal images and logs; ARSO weather and climate data; manufacturer data for embodied emissions.
+- **Permissions:** rooms we live in; FRI building only with permission; fixes must be removable.
+- **Roles (to confirm):** Person A — TBD. Person B — TBD. Both — proposal, footprint section, report.
+- **Optional extensions** (only if on schedule): check one element with a known U-value; scan one FRI façade from outside; compare with a cheap phone thermal camera; share results with student housing; open dataset.
+
+## References
+
+[1] European Parliament and Council (2010). *Directive 2010/31/EU of 19 May 2010 on the energy performance of buildings (recast).* https://eur-lex.europa.eu/eli/dir/2010/31/oj (the 40% figure is in the recitals; check the recital number)
+
+[2] The Geovation Group, University of Calgary. *MyHEAT.* https://wpsites.ucalgary.ca/geovation/research/myheat
+
+[3] Electricity Canada. *Home Heat Saver Program (Saint John Energy and MyHEAT).* https://electricity.ca/lead/centre-of-excellence/home-heat-saver-program/
+
+[4] P. A. Fokaides, S. A. Kalogirou (2011). Application of infrared thermography for the determination of the overall heat transfer coefficient (U-value) in building envelopes. *Applied Energy*, 88(12), 4358–4365. https://doi.org/10.1016/j.apenergy.2011.05.014
+
+[5] M. Kylili, P. A. Fokaides, P. Christou, S. A. Kalogirou (2014). Infrared thermography (IRT) applications for building diagnostics: A review. *Applied Energy*, 134, 531–549. https://doi.org/10.1016/j.apenergy.2014.08.005
+
+[6] EN ISO 6781-1:2023. *Thermal performance of buildings — Qualitative detection of thermal irregularities in building envelopes — Infrared method* (replaces EN 13187:1999). Check the full text for the temperature-difference conditions.
