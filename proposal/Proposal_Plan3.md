@@ -1,5 +1,5 @@
 <!--
-DRAFT proposal, built from plans/plan2_Doohyun.md. Not final.
+DRAFT proposal, built from plans/plan3_Doohyun.md. Not final.
 Follows 01_SUSCOMP_Project_Proposal_Template.pdf: title, authors, date, opening paragraph, then
 1 Related Work, 2 Methodology, 3 Milestones, 4 Evaluation Plan, 5 Resources, References. Limit: 2 pages.
 Before submitting: verify every "(verify)" item, replace TBD values, convert to PDF.

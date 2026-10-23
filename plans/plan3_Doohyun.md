@@ -1,4 +1,4 @@
-# Project plan 2: S1 + #3 twisted, can we trust software "energy" numbers? Auditing and fixing energy estimators on a laptop
+# Project plan 3: S1 + #3 twisted, can we trust software "energy" numbers? Auditing and fixing energy estimators on a laptop
 
 ## Problem and goal
 

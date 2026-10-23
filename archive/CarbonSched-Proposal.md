@@ -1,3 +1,5 @@
+> **Archived — not a candidate proposal.** Early proposal draft for a carbon-aware task scheduler. It has no parent plan file in `plans/`; this is intentional. Kept for reference only. It contains unverified figures (Google −25%, ING SCALE −20%); check them before reusing any part.
+
 claud# CarbonSched: A Forecast-Driven Carbon-Aware Task Scheduler
 
 ## 1. Introduction

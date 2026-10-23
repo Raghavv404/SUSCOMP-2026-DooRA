@@ -1,4 +1,4 @@
-# Project plan 3: P2 twisted, find the worst heat leaks with a thermal camera, fix them cheaply, and measure the saving
+# Project plan 4: P2 twisted, find the worst heat leaks with a thermal camera, fix them cheaply, and measure the saving
 
 ## Problem and goal
 

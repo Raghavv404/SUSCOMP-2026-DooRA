@@ -1,4 +1,4 @@
-# Project plan 1: P1 twisted, scheduling heavy, non-urgent compute to Slovenia's cleanest hours
+# Project plan 2: P1 twisted, scheduling heavy, non-urgent compute to Slovenia's cleanest hours
 
 ## Problem and goal
 
